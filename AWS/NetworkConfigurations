@@ -1,4 +1,4 @@
-VPC01 + NGW + IGW
+VPC01 + Regional NGW + IGW
 10.0.0.0/24
 
   AZ01
