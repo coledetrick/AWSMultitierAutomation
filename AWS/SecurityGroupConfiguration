@@ -1,0 +1,18 @@
+ALBSG01
+  Inbound
+    Type:HTTP | Protocol:TCP | Port Range:80 | Source: 0.0.0.0/0 |
+  Outbound
+    Type:All Traffic | Protocol:All | Port Range:ANY | Destination: 0.0.0.0/0 |
+
+ASGSG01
+  Inbound
+    Type:HTTP | Protocol:TCP | Port Range:80 | Source: ALBSG01 |
+  Outbound
+    Type:All Traffic | Protocol:All | Port Range:ANY | Destination: 0.0.0.0/0 |
+
+DBSG01
+  Inbound
+    Type:PostgreSQL | Protocol:TCP | Port Range:5432 | Source: ASGSG01 |
+  Outbound
+    Type:All Traffic | Protocol:All | Port Range:ANY | Destination: 0.0.0.0/0 |
+ 
