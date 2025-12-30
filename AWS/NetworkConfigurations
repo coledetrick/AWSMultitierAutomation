@@ -1,0 +1,28 @@
+VPC01 + NGW + IGW
+10.0.0.0/24
+
+  AZ01
+    PrivateSubnet01AZ01
+      10.0.0.0/28
+        RouteTable01
+          Dest: 0.0.0.0 Target: NAT gateway
+          Dest: 10.0.0.0/24 Target: local
+
+    PublicSubnet01AZ01
+      10.0.0.16/28
+        RouteTable02      
+          Dest: 0.0.0.0 Target: IGW
+          Dest: 10.0.0.0/24 Target: local
+
+  AZ02
+    PrivateSubnet01AZ02
+      10.0.0.32/28
+        RouteTable03
+          Dest: 0.0.0.0 Target: NAT gateway
+          Dest: 10.0.0.0/24 Target: local
+
+    PublicSubnet01AZ02
+      10.0.0.48/28
+        RouteTable04
+          Dest: 0.0.0.0 Target: IGW
+          Dest: 10.0.0.0/24 Target: local
