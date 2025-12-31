@@ -79,3 +79,23 @@ resource "aws_route_table" "PrivateRouteTable01" {
     Name = "PrivateRouteTable01"
   }
 }
+
+resource "aws_route_table_association" "PubSub01AZ01Assoc" {
+  subnet_id      = aws_subnet.PublicSubnet01AZ01.id
+  route_table_id = aws_route_table.PublicRouteTable01.id
+}
+
+resource "aws_route_table_association" "PubSub01AZ02Assoc" {
+  subnet_id      = aws_subnet.PublicSubnet01AZ02.id
+  route_table_id = aws_route_table.PublicRouteTable01.id
+}
+
+resource "aws_route_table_association" "PrivSub01AZ01Assoc" {
+  subnet_id      = aws_subnet.PrivateSubnet01AZ01.id
+  route_table_id = aws_route_table.PrivateRouteTable01.id
+}
+
+resource "aws_route_table_association" "PrivSub01AZ02Assoc" {
+  subnet_id      = aws_subnet.PrivateSubnet01AZ02.id
+  route_table_id = aws_route_table.PrivateRouteTable01.id
+}
