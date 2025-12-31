@@ -1,11 +1,18 @@
-resource "aws_vpc" "main" {
-  cidr_block       = "10.0.0.0/24"
-  instance_tenancy = "default"
+data "aws_availability_zones" "available" {}
 
-  tags = {
-    Name = "automated-VPC"
-  }
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/24"
 }
+
+resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id
+}
+
+resource "aws_nat_gateway" "main" {
+  vpc_id            = aws_vpc.main.id
+  availability_mode = "regional"
+}
+
 
 resource "aws_subnet" "PublicSubnet01AZ01" {
   vpc_id     = aws_vpc.main.id
