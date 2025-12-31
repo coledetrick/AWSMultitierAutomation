@@ -99,3 +99,21 @@ resource "aws_route_table_association" "PrivSub01AZ02Assoc" {
   subnet_id      = aws_subnet.PrivateSubnet01AZ02.id
   route_table_id = aws_route_table.PrivateRouteTable01.id
 }
+
+resource "aws_security_group" "ALBSG01" {
+  name        = "ALBSG01"
+  description = "Allow traffic into ALB."
+  vpc_id      = aws_vpc.main.id
+
+  tags = {
+    Name = "ALBSG01"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_HTTP_traffic_ipv4" {
+  security_group_id = aws_security_group.ALBSG01.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = "80"
+  ip_protocol       = "tcp" 
+  to_port           = "80"
+}
