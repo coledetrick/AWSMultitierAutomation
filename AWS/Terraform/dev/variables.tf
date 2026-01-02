@@ -99,6 +99,9 @@ resource "aws_route_table_association" "PrivSub01AZ02Assoc" {
   subnet_id      = aws_subnet.PrivateSubnet01AZ02.id
   route_table_id = aws_route_table.PrivateRouteTable01.id
 }
+# Finish out security groups, test the networking deployment and then start working on the scripts for the actual infrastructure deployments.
+
+
 
 resource "aws_security_group" "ALBSG01" {
   name        = "ALBSG01"
