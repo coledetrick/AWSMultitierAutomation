@@ -192,3 +192,30 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" 
 }
+
+resource "aws_lb_target_group" "TG01" {
+  name     = "TG01"
+  port     = "80"
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.main.id
+
+  health_check {
+    enabled             = true
+    path                = "/health"
+    protocol            = "HTTP"
+    matcher             = "200-399"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+  }
+}
+
+resource "aws_lb" "ALB01" {
+  name               = "ALB01"
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.ALBSG01.id]
+  subnets            = [aws_subnet.PublicSubnet01AZ02.id, aws_subnet.PublicSubnet01AZ01.id]
+
+  internal = false
+}
