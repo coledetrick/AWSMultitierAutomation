@@ -242,7 +242,9 @@ resource "aws_launch_template" "LT01" {
   vpc_security_group_ids = [aws_security_group.ASGSG01.id]
 
   user_data = base64encode(templatefile("${path.module}/user_data.sh", {
+  db_host = aws_db_instance.postgres.address
   }))
+  
 }
 
 
