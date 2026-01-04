@@ -106,6 +106,17 @@ resource "aws_route_table_association" "PrivSub01AZ02Assoc" {
 }
 # Finish out security groups, test the networking deployment and then start working on the scripts for the actual infrastructure deployments.
 
+rescource "aws_db_subnet_group" "db_subnets" {
+
+resource "aws_db_subnet_group" "db_subnets" {
+  name       = "db_subnets"
+  subnet_ids = [aws_subnet.PrivateSubnet01AZ01.id, aws_subnet.PrivateSubnet01AZ02.id, PublicSubnet01AZ02.id, PublicSubnet01AZ01.id]
+  vpc_id     = aws_vpc.main.id
+
+  tags = {
+    Name = "db_subnets"
+  }
+}
 
 
 resource "aws_security_group" "ALBSG01" {
@@ -289,7 +300,7 @@ resource "aws_db_instance" "postgres" {
   password = "password"
 
   db_subnet_group_name   = aws_db_subnet_group.db_subnets.name
-  vpc_security_group_ids = [aws_security_group.DBSG01.id]
+  vpc_security_group_ids = [aws_vpc_security_group.DBSG01.id]
 
   publicly_accessible = false
 
