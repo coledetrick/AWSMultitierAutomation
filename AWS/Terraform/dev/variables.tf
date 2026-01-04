@@ -219,3 +219,14 @@ resource "aws_lb" "ALB01" {
 
   internal = false
 }
+
+resource "aws_launch_template" "LaunchTemplate01" {
+  name_prefix   = "LaunchTemplate01"
+  image_id      = "ami-0ebf411a80b6b22cb"
+  instance_type = "t3.micro"
+
+  vpc_security_group_ids = [aws_security_group.ASGSG01.id]
+
+  user_data = base64encode(templatefile("${path.module}/user_data.sh", {
+  }))
+}
