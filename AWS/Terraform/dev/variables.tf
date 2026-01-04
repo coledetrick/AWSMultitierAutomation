@@ -270,3 +270,33 @@ resource "aws_autoscaling_group" "ASG01" {
   }
 }
 
+resource "aws_db_instance" "postgres" {
+  identifier = "pg01"
+
+  engine         = "postgres"
+  engine_version = "16.1"           # pick what you want; keep consistent
+  instance_class = "db.t3.micro"    # for labs; production usually bigger
+
+  allocated_storage = 20
+  storage_type      = "gp3"
+
+  db_name  = "appdb"
+  username = "appuser"
+  password = random_password.db_password.result
+
+  db_subnet_group_name   = aws_db_subnet_group.db_subnets.name
+  vpc_security_group_ids = [aws_security_group.DBSG01.id]
+
+  publicly_accessible = false
+
+  skip_final_snapshot = true  
+  deletion_protection = false 
+
+  backup_retention_period = 7
+  multi_az                = true
+
+  tags = {
+    Name = "DB01"
+  }
+}
+
