@@ -297,7 +297,7 @@ resource "aws_db_instance" "postgres" {
   deletion_protection = false 
 
   backup_retention_period = 7
-  multi_az                = true
+  multi_az                = false
 
   tags = {
     Name = "DB01"
