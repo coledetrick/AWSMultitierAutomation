@@ -10,7 +10,7 @@ echo "Hello from $(hostname)" > /var/www/html/index.html
 
 cat > /var/www/cgi-bin/db-check.sh << 'EOF'
 #!/bin/bash
-DB_HOST="database01.cnyu4020gp0h.us-west-2.rds.amazonaws.com"
+DB_HOST=""${db_host}"
 DB_PORT="5432"   
 TIMEOUT_SECONDS="2"
 
