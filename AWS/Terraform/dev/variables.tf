@@ -224,6 +224,17 @@ resource "aws_lb" "ALB01" {
   internal = false
 }
 
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.ALB01.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.TG01.arn
+  }
+}
+
 resource "aws_launch_template" "LT01" {
   name_prefix   = "LT01"
   image_id      = "ami-0ebf411a80b6b22cb"
