@@ -113,7 +113,7 @@ resource "aws_security_group" "ALBSG01" {
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "allow_HTTP_traffic_ipv4" {
+resource "aws_vpc_security_group_ingress_rule" "allow_http_traffic_ipv4_alb" {
   security_group_id = aws_security_group.ALBSG01.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = "80"
@@ -121,7 +121,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_HTTP_traffic_ipv4" {
   to_port           = "80"
 }
 
-resource "aws_vpc_security_group_ingress_rule" "allow_HTTPS_traffic_ipv4" {
+resource "aws_vpc_security_group_ingress_rule" "allow_https_traffic_ipv4_alb" {
   security_group_id = aws_security_group.ALBSG01.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = "443"
@@ -129,7 +129,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_HTTPS_traffic_ipv4" {
   to_port           = "443"
 }
 
-resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_alb" {
   security_group_id = aws_security_group.ALBSG01.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" 
@@ -145,7 +145,7 @@ resource "aws_security_group" "ASGSG01" {
   }
 }
 
-resource "aws_security_group_ingress_rule" "allow_http_from_web" {
+resource "aws_security_group_ingress_rule" "allow_http_from_alb" {
   security_group_id        = aws_security_group.ASGSG01.id  
   from_port                = "80"
   to_port                  = "80"
@@ -153,7 +153,7 @@ resource "aws_security_group_ingress_rule" "allow_http_from_web" {
   source_security_group_id = aws_security_group.ALBSG01.id
 }
 
-resource "aws_security_group_ingress_rule" "allow_http_from_web" {
+resource "aws_security_group_ingress_rule" "allow_https_from_alb" {
   security_group_id        = aws_security_group.ASGSG01.id  
   from_port                = "443"
   to_port                  = "443"
@@ -161,7 +161,7 @@ resource "aws_security_group_ingress_rule" "allow_http_from_web" {
   source_security_group_id = aws_security_group.ALBSG01.id
 }
 
-resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_asg" {
   security_group_id = aws_security_group.ASGSG01.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" 
@@ -169,7 +169,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
 
 
 
-resource "aws_security_group_ingress_rule" "allow_PostreSQL_from_ASG" {
+resource "aws_security_group_ingress_rule" "allow_PostreSQL_from_asg" {
   security_group_id        = aws_security_group.DBSG01.id  
   from_port                = "5432"
   to_port                  = "5432"
@@ -187,7 +187,7 @@ resource "aws_security_group" "DBSG01" {
   }
 }
 
-resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_db" {
   security_group_id = aws_security_group.DBSG01.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" 
