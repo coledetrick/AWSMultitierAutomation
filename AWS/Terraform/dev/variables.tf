@@ -116,17 +116,17 @@ resource "aws_security_group" "ALBSG01" {
 resource "aws_vpc_security_group_ingress_rule" "allow_http_traffic_ipv4_alb" {
   security_group_id = aws_security_group.ALBSG01.id
   cidr_ipv4         = "0.0.0.0/0"
-  from_port         = "80"
+  from_port         = 80
   ip_protocol       = "tcp" 
-  to_port           = "80"
+  to_port           = 80
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_https_traffic_ipv4_alb" {
   security_group_id = aws_security_group.ALBSG01.id
   cidr_ipv4         = "0.0.0.0/0"
-  from_port         = "443"
+  from_port         = 443
   ip_protocol       = "tcp" 
-  to_port           = "443"
+  to_port           = 443
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_alb" {
@@ -147,17 +147,17 @@ resource "aws_security_group" "ASGSG01" {
 
 resource "aws_security_group_ingress_rule" "allow_http_from_alb" {
   security_group_id        = aws_security_group.ASGSG01.id  
-  from_port                = "80"
-  to_port                  = "80"
-  protocol                 = "tcp"
+  from_port                = 80
+  to_port                  = 80
+  ip_protocol                 = "tcp"
   source_security_group_id = aws_security_group.ALBSG01.id
 }
 
 resource "aws_security_group_ingress_rule" "allow_https_from_alb" {
   security_group_id        = aws_security_group.ASGSG01.id  
-  from_port                = "443"
-  to_port                  = "443"
-  protocol                 = "tcp"
+  from_port                = 443
+  to_port                  = 443
+  ip_protocol                 = "tcp"
   source_security_group_id = aws_security_group.ALBSG01.id
 }
 
@@ -171,8 +171,8 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_asg" {
 
 resource "aws_security_group_ingress_rule" "allow_PostreSQL_from_asg" {
   security_group_id        = aws_security_group.DBSG01.id  
-  from_port                = "5432"
-  to_port                  = "5432"
+  from_port                = 5432
+  to_port                  = 5432
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.ASGSG01.id
 }
@@ -195,7 +195,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_db" {
 
 resource "aws_lb_target_group" "TG01" {
   name     = "TG01"
-  port     = "80"
+  port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
 
