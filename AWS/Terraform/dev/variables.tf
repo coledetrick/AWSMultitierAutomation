@@ -154,7 +154,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_http_from_alb" {
   from_port                = 80
   to_port                  = 80
   ip_protocol                 = "tcp"
-  source_security_group_id = aws_security_group.ALBSG01.id
+  referenced_security_group_id = aws_security_group.ALBSG01.id
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_https_from_alb" {
@@ -162,7 +162,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_https_from_alb" {
   from_port                = 443
   to_port                  = 443
   ip_protocol                 = "tcp"
-  source_security_group_id = aws_security_group.ALBSG01.id
+  referenced_security_group_id = aws_security_group.ALBSG01.id
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_asg" {
@@ -178,7 +178,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_PostreSQL_from_asg" {
   from_port                = 5432
   to_port                  = 5432
   ip_protocol                 = "tcp"
-  source_security_group_id = aws_security_group.ASGSG01.id
+  referenced_security_group_id = aws_security_group.ASGSG01.id
 }
 
 resource "aws_security_group" "DBSG01" {
