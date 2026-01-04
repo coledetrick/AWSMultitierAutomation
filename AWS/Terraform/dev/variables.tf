@@ -220,8 +220,8 @@ resource "aws_lb" "ALB01" {
   internal = false
 }
 
-resource "aws_launch_template" "LaunchTemplate01" {
-  name_prefix   = "LaunchTemplate01"
+resource "aws_launch_template" "LT01" {
+  name_prefix   = "LT01"
   image_id      = "ami-0ebf411a80b6b22cb"
   instance_type = "t3.micro"
 
@@ -230,3 +230,29 @@ resource "aws_launch_template" "LaunchTemplate01" {
   user_data = base64encode(templatefile("${path.module}/user_data.sh", {
   }))
 }
+
+
+resource "aws_autoscaling_group" "ASG01" {
+  name                = "ASG01"
+  desired_capacity    = 2
+  min_size            = 2
+  max_size            = 3
+  vpc_zone_identifier = [aws_subnet.PrivateSubnet01AZ02.id, aws_subnet.PivateSubnet01AZ01.id]
+
+  launch_template {
+    id      = aws_launch_template.LT01.id
+    version = "$Latest"
+  }
+
+  target_group_arns = [aws_lb_target_group.TG01.arn]
+
+  health_check_type         = "ELB"
+  health_check_grace_period = 120
+
+  tag {
+    key                 = "Name"
+    value               = "ASG01"
+    propagate_at_launch = true
+  }
+}
+
