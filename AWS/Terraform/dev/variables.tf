@@ -172,16 +172,6 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_asg" {
   ip_protocol       = "-1" 
 }
 
-
-
-resource "aws_vpc_security_group_ingress_rule" "allow_PostreSQL_from_asg" {
-  security_group_id        = aws_security_group.DBSG01.id  
-  from_port                = 5432
-  to_port                  = 5432
-  ip_protocol                 = "tcp"
-  referenced_security_group_id = aws_security_group.ASGSG01.id
-}
-
 resource "aws_security_group" "DBSG01" {
   name        = "DBSG01"
   description = "DB security group."
@@ -190,6 +180,14 @@ resource "aws_security_group" "DBSG01" {
   tags = {
     Name = "DBSG01"
   }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_PostreSQL_from_asg" {
+  security_group_id        = aws_security_group.DBSG01.id  
+  from_port                = 5432
+  to_port                  = 5432
+  ip_protocol                 = "tcp"
+  referenced_security_group_id = aws_security_group.ASGSG01.id
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_db" {
@@ -201,13 +199,13 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_db" {
 resource "aws_lb_target_group" "TG01" {
   name     = "TG01"
   port     = 80
-  ip_protocol = "HTTP"
+  protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
 
   health_check {
     enabled             = true
     path                = "/health"
-    ip_protocol            = "HTTP"
+    protocol            = "HTTP"
     matcher             = "200-399"
     interval            = 30
     timeout             = 5
@@ -228,7 +226,7 @@ resource "aws_lb" "ALB01" {
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.ALB01.arn
   port              = 80
-  ip_protocol          = "HTTP"
+  protocol          = "HTTP"
 
   default_action {
     type             = "forward"
