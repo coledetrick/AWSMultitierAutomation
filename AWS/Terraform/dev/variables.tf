@@ -105,7 +105,7 @@ resource "aws_route_table_association" "PrivSub01AZ02Assoc" {
 
 resource "aws_security_group" "ALBSG01" {
   name        = "ALBSG01"
-  description = "Allow traffic into ALB."
+  description = "ALB security group."
   vpc_id      = aws_vpc.main.id
 
   tags = {
@@ -119,4 +119,76 @@ resource "aws_vpc_security_group_ingress_rule" "allow_HTTP_traffic_ipv4" {
   from_port         = "80"
   ip_protocol       = "tcp" 
   to_port           = "80"
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_HTTPS_traffic_ipv4" {
+  security_group_id = aws_security_group.ALBSG01.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = "443"
+  ip_protocol       = "tcp" 
+  to_port           = "443"
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+  security_group_id = aws_security_group.ALBSG01.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" 
+}
+
+resource "aws_security_group" "ASGSG01" {
+  name        = "ASGSG01"
+  description = "ASG security group."
+  vpc_id      = aws_vpc.main.id
+
+  tags = {
+    Name = "ASGSG01"
+  }
+}
+
+resource "aws_security_group_ingress_rule" "allow_http_from_web" {
+  security_group_id        = aws_security_group.ASGSG01.id  
+  from_port                = "80"
+  to_port                  = "80"
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.ALBSG01.id
+}
+
+resource "aws_security_group_ingress_rule" "allow_http_from_web" {
+  security_group_id        = aws_security_group.ASGSG01.id  
+  from_port                = "443"
+  to_port                  = "443"
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.ALBSG01.id
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+  security_group_id = aws_security_group.ASGSG01.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" 
+}
+
+
+
+resource "aws_security_group_ingress_rule" "allow_PostreSQL_from_ASG" {
+  security_group_id        = aws_security_group.DBSG01.id  
+  from_port                = "5432"
+  to_port                  = "5432"
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.ASGSG01.id
+}
+
+resource "aws_security_group" "DBSG01" {
+  name        = "DBSG01"
+  description = "DB security group."
+  vpc_id      = aws_vpc.main.id
+
+  tags = {
+    Name = "DBSG01"
+  }
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+  security_group_id = aws_security_group.DBSG01.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" 
 }
