@@ -5,7 +5,7 @@ TODO
 - grab db secrets from vault
 - add https, no redirect but 'hello from HTTPS', add domain name.
 - add terraform CICD
-- 
+  
 - Architectural diagram
 - Lessons learned, choices made.
 - Blog post of running the program, link it here.
