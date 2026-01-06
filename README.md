@@ -1,14 +1,12 @@
 # AWSMultitierAutomation
 Automated provisioning of a core multitier aws infrastructure.
 TODO
-- add variables file and modularity
-- grab db secrets from vault
-- add https, no redirect but 'hello from HTTPS', add domain name.
-- add terraform CICD
-  
-- Architectural diagram
-- Lessons learned, choices made.
-- Blog post of running the program, link it here.
+- Move everything from main.tf -> variables.tf
+- Create terraform.yml and figure out how to get things running on GitHub actions.
+- Create architectural diagram
+- Figure out README-> lessons learned, important info for people to read
+- Blog post running the program , link the blog and repo then post to linkedin.
+- Do the same things for node actions deployment.
 
 ## Validation Endpoints
 
