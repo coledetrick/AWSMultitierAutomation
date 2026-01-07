@@ -1,16 +1,3 @@
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      version = "6.27.0"
-    }
-  }
-}
-
-provider "aws" {
-  region = "us-west-2"
-}
-cole@DESKTOP-350VJD0:~/terratest$ cat main.tf
 data "aws_availability_zones" "available" {}
 
 resource "aws_vpc" "main" {
