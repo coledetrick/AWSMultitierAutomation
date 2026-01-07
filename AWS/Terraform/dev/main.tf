@@ -1,3 +1,16 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "6.27.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-west-2"
+}
+cole@DESKTOP-350VJD0:~/terratest$ cat main.tf
 data "aws_availability_zones" "available" {}
 
 resource "aws_vpc" "main" {
@@ -131,7 +144,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_http_traffic_ipv4_alb" {
   security_group_id = aws_security_group.albsg01.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 80
-  ip_protocol       = "tcp" 
+  ip_protocol       = "tcp"
   to_port           = 80
 }
 
@@ -139,14 +152,14 @@ resource "aws_vpc_security_group_ingress_rule" "allow_https_traffic_ipv4_alb" {
   security_group_id = aws_security_group.albsg01.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 443
-  ip_protocol       = "tcp" 
+  ip_protocol       = "tcp"
   to_port           = 443
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_alb" {
   security_group_id = aws_security_group.albsg01.id
   cidr_ipv4         = "0.0.0.0/0"
-  ip_protocol       = "-1" 
+  ip_protocol       = "-1"
 }
 
 resource "aws_security_group" "asgsg01" {
@@ -160,7 +173,7 @@ resource "aws_security_group" "asgsg01" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_http_from_alb" {
-  security_group_id        = aws_security_group.asgsg01.id  
+  security_group_id        = aws_security_group.asgsg01.id
   from_port                = 80
   to_port                  = 80
   ip_protocol                 = "tcp"
@@ -168,7 +181,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_http_from_alb" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_https_from_alb" {
-  security_group_id        = aws_security_group.asgsg01.id  
+  security_group_id        = aws_security_group.asgsg01.id
   from_port                = 443
   to_port                  = 443
   ip_protocol                 = "tcp"
@@ -178,7 +191,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_https_from_alb" {
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_asg" {
   security_group_id = aws_security_group.asgsg01.id
   cidr_ipv4         = "0.0.0.0/0"
-  ip_protocol       = "-1" 
+  ip_protocol       = "-1"
 }
 
 resource "aws_security_group" "dbsg01" {
@@ -192,7 +205,7 @@ resource "aws_security_group" "dbsg01" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_PostreSQL_from_asg" {
-  security_group_id        = aws_security_group.dbsg01.id  
+  security_group_id        = aws_security_group.dbsg01.id
   from_port                = 5432
   to_port                  = 5432
   ip_protocol                 = "tcp"
@@ -202,7 +215,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_PostreSQL_from_asg" {
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_db" {
   security_group_id = aws_security_group.dbsg01.id
   cidr_ipv4         = "0.0.0.0/0"
-  ip_protocol       = "-1" 
+  ip_protocol       = "-1"
 }
 
 resource "aws_lb_target_group" "tg01" {
@@ -253,7 +266,7 @@ resource "aws_launch_template" "lt01" {
   user_data = base64encode(templatefile("${path.module}/user_data.sh", {
   db_host = aws_db_instance.postgres.address
   }))
-  
+
 }
 
 
@@ -287,8 +300,8 @@ resource "aws_db_instance" "postgres" {
   identifier = "db01"
 
   engine         = "postgres"
-  engine_version = "16.1"           
-  instance_class = "db.t4g.micro"    
+  engine_version = "17.6"
+  instance_class = "db.t4g.micro"
 
   allocated_storage = 20
   storage_type      = "gp3"
@@ -302,10 +315,10 @@ resource "aws_db_instance" "postgres" {
 
   publicly_accessible = false
 
-  skip_final_snapshot = true  
-  deletion_protection = false 
+  skip_final_snapshot = true
+  deletion_protection = false
 
-  backup_retention_period = 7
+  backup_retention_period = 1
   multi_az                = false
 
   tags = {
