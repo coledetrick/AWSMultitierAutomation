@@ -5,7 +5,8 @@ TODO
 - Figure out README-> lessons learned, important info for people to read
 - Blog post running the program , link the blog and repo then post to linkedin.
 - Do the same things for node actions deployment.
-
+- add ansible project to them, point endpoints to certain ports to say hello from ansible
+- add https?
 ## Validation Endpoints
 
 - `/`      – application landing page
