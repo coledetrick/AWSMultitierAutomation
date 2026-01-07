@@ -11,11 +11,11 @@ echo "Hello from $(hostname)" > /var/www/html/index.html
 cat > /var/www/cgi-bin/db-check.sh << 'EOF'
 #!/bin/bash
 DB_HOST="${db_host}"
-DB_PORT="5432"   
+DB_PORT="5432"
 TIMEOUT_SECONDS="2"
 
 # CGI headers
-if timeout ${TIMEOUT_SECONDS} bash -c "cat < /dev/null > /dev/tcp/${DB_HOST}/${DB_PORT}" 2>/dev/null; then
+if timeout $${TIMEOUT_SECONDS} bash -c "cat < /dev/null > /dev/tcp/$${DB_HOST}/$${DB_PORT}" 2>/dev/null; then
   echo -e "Status: 200 OK\r\nContent-Type: text/plain\r\n\r\nDB CONNECTIVITY: OK"
 else
   echo -e "Status: 503 Service Unavailable\r\nContent-Type: text/plain\r\n\r\nDB CONNECTIVITY: FAIL"
