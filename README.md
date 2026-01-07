@@ -12,15 +12,3 @@ TODO
 - `/health` – ALB target group health check
 - `/db`     – validates connectivity from app tier to RDS
 
-These endpoints are used to validate network, security group, and routing correctness.
-
-.
-├── .github/
-│   └── workflows/
-│       └── terraform.yml
-├── main.tf
-├── providers.tf
-├── variables.tf
-├── outputs.tf
-├── user_data.sh
-└── README.md
