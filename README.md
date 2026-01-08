@@ -12,3 +12,6 @@ TODO
 - `/health` – ALB target group health check
 - `/db`     – validates connectivity from app tier to RDS
 
+![Diagram of system flow](images/NetworkDiagram.png)
+
+![Diagram of system flow](images/SecurityDiagram.png)
