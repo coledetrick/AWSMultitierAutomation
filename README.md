@@ -1,11 +1,10 @@
 # AWSMultitierAutomation
 Automated provisioning of a core multitier aws infrastructure.
 TODO
-- Create architectural diagram
 - Figure out README-> lessons learned, important info for people to read
 - Blog post running the program , link the blog and repo then post to linkedin.
 - Do the same things for node actions deployment.
-
+- Add network config
 ## Validation Endpoints
 
 - `/`      – application landing page
