@@ -1,17 +1,18 @@
 # AWSMultitierAutomation
-Automated provisioning of a core multitier aws infrastructure.
-TODO
-- Figure out README-> lessons learned, important info for people to read
-- Blog post running the program , link the blog and repo then post to linkedin.
-- Do the same things for node actions deployment.
-- Add network config
-- Add remote state locking backend on s3
+Explanation of project:
+***
+
 ## Validation Endpoints
 
 - `/`      – application landing page
 - `/health` – ALB target group health check
 - `/db`     – validates connectivity from app tier to RDS
 
+Explanation
 ![Diagram of system flow](images/NetworkDiagram.png)
 
+Explanantion
 ![Diagram of system flow](images/SecurityDiagram.png)
+
+Lessons learned:
+***
