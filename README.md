@@ -5,6 +5,7 @@ TODO
 - Blog post running the program , link the blog and repo then post to linkedin.
 - Do the same things for node actions deployment.
 - Add network config
+- Add remote state locking backend on s3
 ## Validation Endpoints
 
 - `/`      – application landing page
