@@ -1,5 +1,9 @@
 This repository contains a Terraform project I have been experimenting with for deploying AWS infrastructure using **GitHub Actions** as the execution engine.
 
+TODO:
+ORGANIZE THIS 
+BLOG POST
+
 ## Validation Endpoints
 
 - `/`      – application landing page
