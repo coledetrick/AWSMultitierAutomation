@@ -25,7 +25,6 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
 
   apply:
-    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: dev 
     defaults:
