@@ -1,5 +1,6 @@
-Automated deployment of a multi-tier AWS environment using Terraform and GitHub Actions, focused on Infrastructure as Code, CI/CD-driven provisioning, and AWS networking and security fundamentals.
-
+## AWS Multitier Automation
+- Automated deployment of a multi-tier AWS environment using Terraform and GitHub Actions, focused on Infrastructure as Code, CI/CD-driven provisioning, and AWS networking and security fundamentals.
+- This project taught me alot about managing resources with Terraform, how Terraform handles different resource dependency problems, how GitHub Actions runners can be utilized in creative ways, as well as cemented alot of AWS best practices I learned from my SAA studies.
 ## Program flow
 - The infrastructure is fully automated with Terraform, the compute is provisioned with a user_data script, and the CI/CD is handled by GitHub Actions.
 - When the workflow is ran the infrastructure is provisioned, the tf state is saved to an s3 bucket allowing me to destroy or modify resources from different clients.
