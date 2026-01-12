@@ -3,7 +3,7 @@ Automated deployment of a multi-tier AWS environment using Terraform and GitHub 
 ## Program flow
 - The infrastructure is fully automated with Terraform, the compute is provisioned with a user_data script, and the CI/CD is handled by GitHub Actions.
 - When the workflow is ran the infrastructure is provisioned, the tf state is saved to an s3 bucket allowing me to destroy or modify resources from different clients.
-- When the ASG is fully provisioned, the user_data script is ran and stands up an endpoint for **/** (verify connectivity),  **/health** (for ALB health checks), and **/db** to verify connectivity to the RDS postreSQL db.
+- When the ASG is fully provisioned, the user_data script is ran and stands up an endpoint for `/` (verify connectivity),  `/health` (for ALB health checks), and `/db` to verify connectivity to the RDS postreSQL db.
 
 ## The application used is just to prove the underlying infrastructure, networking and security, this is verified by the validation endpoints. 
 ## Validation Endpoints
