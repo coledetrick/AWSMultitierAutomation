@@ -1,56 +1,30 @@
-This repository contains a Terraform project I have been experimenting with for deploying AWS infrastructure using **GitHub Actions** as the execution engine.
+Automated deployment of a multi-tier AWS environment using Terraform and GitHub Actions, focused on Infrastructure as Code, CI/CD-driven provisioning, and AWS networking and security fundamentals.
 
-TODO:
-ORGANIZE THIS 
-BLOG POST
+##Program flow
+- The infrastructure is fully automated with Terraform, the compute is provisioned with a user_data script, and the CI/CD is handled by GitHub Actions.
+- When the workflow is ran the infrastructure is provisioned, the tf state is saved to an s3 bucket allowing me to destroy or modify resources from different clients.
+- When the ASG is fully provisioned, the user_data script is ran and stands up an endpoint for **/** (verify connectivity),  **/health** (for ALB health checks), and **/db** to verify connectivity to the RDS postreSQL db.
 
+##The application used is just to prove the underlying infrastructure, networking and security, this is verified by the validation endpoints. 
 ## Validation Endpoints
 
 - `/`      – application landing page
 - `/health` – ALB target group health check
 - `/db`     – validates connectivity from app tier to RDS
 
-Explanation
+Architecture
+
+##Network Architecture
+- VPC-based network with segmented resources
+- Public and private access boundaries
+- Designed to support multi-tier application patterns
 ![Diagram of system flow](images/NetworkDiagram.png)
 
-Explanantion
+##Security Architecture
+- Explicit inbound and outbound traffic rules
+- Separation of access responsibilities
+- Least-privilege networking enforced through design
 ![Diagram of system flow](images/SecurityDiagram.png)
-
-
----
-
-## Architecture Overview
-
-This project provisions AWS infrastructure inside a dedicated **dev environment**, including:
-
-* VPC and networking components
-* Security groups
-* Compute resources 
-* User data scripts for instance bootstrapping
-
----
-
-## Repository Structure
-
-```
-.
-├── .github/
-│   └── workflows/
-│       └── terraform.yml        # GitHub Actions workflow
-├── AWS/
-│   └── Terraform/
-│       └── dev/
-│           ├── backend.tf       # S3 remote state configuration
-│           ├── main.tf
-│           ├── variables.tf
-│           ├── outputs.tf
-│           ├── user_data.sh     # EC2 bootstrap script
-│           └── diagrams/
-│               ├── network-architecture.png
-│               └── security-groups.png
-├── .gitignore
-└── README.md
-```
 
 ---
 
@@ -68,8 +42,6 @@ Terraform is executed entirely through **GitHub Actions** for applies.
 
 ---
 
-## AWS Credentials
-
 ### GitHub Actions
 
 GitHub Actions authenticates to AWS using repository secrets:
@@ -77,9 +49,6 @@ GitHub Actions authenticates to AWS using repository secrets:
 * `AWS_ACCESS_KEY_ID`
 * `AWS_SECRET_ACCESS_KEY`
 * `AWS_REGION`
-
-(For future hardening, this can be replaced with GitHub OIDC + IAM role assumption.)
-
 
 ## User Data Scripts
 
