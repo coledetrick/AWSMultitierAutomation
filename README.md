@@ -13,7 +13,7 @@
 - `/health` – ALB target group health check
 - `/db`     – validates connectivity from app tier to RDS
 
-Architecture
+## Architecture
 
 ## Network Architecture
 - VPC-based network with segmented resources
