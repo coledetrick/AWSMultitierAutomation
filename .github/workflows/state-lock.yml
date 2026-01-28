@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       lock_id:
-        description: "69c1e916-fbb2-8f25-a46b-969499109d9c"
+        description: "Lock ID"
         required: true
 
 jobs:
